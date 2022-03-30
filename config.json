@@ -1,0 +1,12 @@
+{
+    "token": "",
+    "prefix": "",
+    "message_settings": {
+        "auto_delete_delay": 15
+    },
+    "theme": {
+        "colour": "fa8072",
+        "title": "flight sb",
+        "emoji": "\ud83d\udee9\ufe0f"
+    }
+}
