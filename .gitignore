@@ -2,3 +2,4 @@ env/*
 graphics/*
 compile.py
 config.json
+*/__pycache__/*
