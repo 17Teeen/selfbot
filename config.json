@@ -2,7 +2,8 @@
     "token": "",
     "prefix": "",
     "message_settings": {
-        "auto_delete_delay": 15
+        "auto_delete_delay": 15,
+        "embeds": false
     },
     "theme": {
         "colour": "fa8072",
