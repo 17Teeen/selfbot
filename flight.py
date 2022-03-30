@@ -1,5 +1,7 @@
 import os
 import sys
+import requests
+import discord
 import discord_self_embed as dembed
 
 from discord.errors import LoginFailure
@@ -12,7 +14,12 @@ from utils import Notifier
 cfg = config.Config()
 cfg.check()
 
-flight = commands.Bot(command_prefix=cfg.get("prefix"), self_bot=True, help_command=None)
+if requests.get("https://discord.com/api/users/@me/settings", headers={"Authorization": cfg.get("token")}).status_code == 200:
+    status = requests.get("https://discord.com/api/users/@me/settings", headers={"Authorization": cfg.get("token")}).json()["status"]
+else:
+    status = "online"
+
+flight = commands.Bot(command_prefix=cfg.get("prefix"), self_bot=True, help_command=None, status=discord.Status.try_value(status))
 
 for command_file in os.listdir("commands"):
     if command_file.endswith(".py"):
