@@ -3,12 +3,13 @@ import os
 
 from . import console
 
-VERSION = "0.0.3-alpha"
+VERSION = "0.0.4-alpha"
 DEFAULT_CONFIG = {
     "token": "",
     "prefix": "",
     "message_settings": {
-        "auto_delete_delay": 15
+        "auto_delete_delay": 15,
+        "embeds": False
     },
     "theme": {
         "colour": "fa8072",
