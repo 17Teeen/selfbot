@@ -33,8 +33,9 @@ class Util(commands.Cog):
             pages.append(commands_str)
 
         if cfg.get("message_settings")["embeds"]:
-            embed = dembed.Embed(f"util commands ({selected_page}/{len(pages)})", description=f"{pages[selected_page - 1]}", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            embed = dembed.Embed(f"", description=f"{pages[selected_page - 1]}", colour=cfg.get('theme')['colour'])
+            embed.set_author(f"util commands ({selected_page}/{len(pages)})")
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"```ini\n[ util commands ({selected_page}/{len(pages)}) ]\n\n{pages[selected_page - 1]}```", delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
