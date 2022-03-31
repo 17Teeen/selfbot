@@ -101,7 +101,7 @@ class Fun(commands.Cog):
 
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description=f"{user.name}'s IQ is {iq}. {smart}", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"""```ini\n[ iq ] {user.name}'s IQ is {iq}. {smart}\n```""")
 
@@ -112,7 +112,7 @@ class Fun(commands.Cog):
 
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description=f"{user.name}#{user.discriminator} is {gay_percentage}% gay.", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"""```ini\n[ how gay? ] {user.name}#{user.discriminator} is {gay_percentage}% gay.\n```""")
 
@@ -124,7 +124,7 @@ class Fun(commands.Cog):
 
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description=f"{user.name}#{user.discriminator} has a {inches} dick.\n{penis}", colour=cfg.get("theme")["colour"])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"""```ini\n[ pp ] {user.name}#{user.discriminator} has a {inches} dick.\n{penis}\n```""", delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
@@ -138,9 +138,22 @@ class Fun(commands.Cog):
 
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description=f"Sent {message} to {user.name}#{user.discriminator} ({user.id}).", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"""```ini\n[ block send ] Sent {message} to {user.name}#{user.discriminator} ({user.id}).\n```""", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+
+    @commands.command(name="gato", description="Get a random cat picture.", usage="")
+    async def gato(self, ctx):
+        cfg = config.Config()
+        resp = requests.get("https://api.alexflipnote.dev/cats")
+        image = resp.json()["file"]
+
+        if cfg.get("message_settings")["embeds"]:
+            embed = dembed.Embed("gato", colour=cfg.get('theme')['colour'])
+            embed.set_image(url=image)
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+        else:
+            await ctx.send(image, delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
     @commands.command(name="cembed", description="Create a custom embed.", usage="")
     async def customembed(self, ctx, *, args):
@@ -148,7 +161,7 @@ class Fun(commands.Cog):
         embed_args = {}
 
         for arg in args:
-            arg = arg.split(":")
+            arg = arg.split(": ")
 
             if arg[0] == "title":
                 embed_args["title"] = arg[1]
@@ -169,16 +182,16 @@ class Fun(commands.Cog):
             if arg[0] == "image":
                 embed_args["image"] = arg[1]
 
-        custom_embed = dembed.Embed(embed_args.get("title", ""), description=embed_args.get("description", ""), colour=embed_args.get("colour", ""), url=embed_args.get("url", ""))
-        
-        if "author" in embed_args:
-            custom_embed.set_author(embed_args["author"], url=embed_args.get("author_url", ""))
-        if "provider" in embed_args:
-            custom_embed.set_provider(embed_args["provider"], url=embed_args.get("provider_url", ""))
-        if "image" in embed_args:
-            custom_embed.set_image(embed_args["image"])
+        custom_embed = dembed.Embed(embed_args.get("title", ""), description=embed_args.get("description"), colour=embed_args.get("colour"), url=embed_args.get("url"))
 
-        await ctx.send("`custom embed`" + str(custom_embed), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+        if "author" in embed_args:
+            custom_embed.set_author(embed_args.get("author"), url=embed_args.get("author_url", ""))
+        if "provider" in embed_args:
+            custom_embed.set_provider(embed_args.get("provider"), url=embed_args.get("provider_url", ""))
+        if "image" in embed_args:
+            custom_embed.set_image(embed_args.get("image"))
+
+        await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + custom_embed.generate_url(hide_url=True, shorten_url=False), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
 
 def setup(bot):
     bot.add_cog(Fun(bot))
