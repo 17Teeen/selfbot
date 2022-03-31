@@ -57,7 +57,7 @@ async def on_command_error(ctx, error):
     try:
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed(title="", description=str(error), color=0xFF0000)
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"```ini\n[ error ] {str(error).lower()}\n```", delete_after=cfg.get("message_settings")["auto_delete_delay"])
     except Exception as e:
