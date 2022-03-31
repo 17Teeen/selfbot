@@ -4,7 +4,6 @@ import discord_self_embed as dembed
 
 from discord.ext import commands
 from utils import config
-# from utils import embed
 
 class Util(commands.Cog):
     def __init__(self, bot):
@@ -62,7 +61,7 @@ class Util(commands.Cog):
 
             if cfg.get("message_settings")["embeds"]:
                 embed = dembed.Embed("", description=description, colour=cfg.get('theme')['colour'])
-                await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+                await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
             else:
                 await ctx.send(f"""```ini\n[ config ]\n\n{description}\n```""", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
 
@@ -79,7 +78,7 @@ class Util(commands.Cog):
             except ValueError:
                 if self.cfg.get("message_settings")["embeds"]:
                     embed = dembed.Embed("", description=f"the value isn't an integer", colour=self.cfg.get('theme')['colour'])
-                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + str(embed), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 else:
                     await ctx.send(f"```ini\n[ error ] the value isn't an integer\n```", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 return
@@ -89,7 +88,7 @@ class Util(commands.Cog):
             if key2[0] not in self.cfg.config or key2[1] not in self.cfg.config[key2[0]]:
                 if self.cfg.get("message_settings")["embeds"]:
                     embed = dembed.Embed("", description=f"invalid key", colour=self.cfg.get('theme')['colour'])
-                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + str(embed), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 else:
                     await ctx.send(f"```ini\n[ error ] invalid key\n```", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 return
@@ -98,7 +97,7 @@ class Util(commands.Cog):
             if key not in self.cfg.config:
                 if self.cfg.get("message_settings")["embeds"]:
                     embed = dembed.Embed("", description=f"invalid key", colour=self.cfg.get('theme')['colour'])
-                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + str(embed), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+                    await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 else:
                     await ctx.send(f"```ini\n[ error ] invalid key\n```", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
                 return
@@ -116,7 +115,7 @@ class Util(commands.Cog):
         self.cfg.save()
         if self.cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description=f"key updated successfully\n{key} : {value}", colour=self.cfg.get('theme')['colour'])
-            await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + str(embed), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{self.cfg.get('theme')['emoji']} `{self.cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
 
         else:
             await ctx.send(f"```ini\n[ config ]\n\nkey updated successfully\n{key} : {value}\n```", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
@@ -127,7 +126,7 @@ class Util(commands.Cog):
         
         if cfg.get("message_settings")["embeds"]:
             embed = dembed.Embed("", description="restarting...", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"```ini\n[ flight ] restarting...\n```", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
         
@@ -142,7 +141,7 @@ class Util(commands.Cog):
             embed = dembed.Embed("", description=f"""    prefix : {self.bot.command_prefix}
 version : {config.VERSION}
 command amount : {command_amount}""", colour=cfg.get('theme')['colour'])
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + str(embed), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
         else:
             await ctx.send(f"""```ini
     [ settings ]
