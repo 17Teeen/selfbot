@@ -6,7 +6,7 @@ chardet==4.0.0
 charset-normalizer==2.0.12
 colorama==0.4.4
 discord.py-self==1.9.2
-discord.py-self-embed==1.0.4
+discord.py-self-embed==1.0.6
 idna==3.3
 multidict==6.0.2
 requests==2.27.1
