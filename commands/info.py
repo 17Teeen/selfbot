@@ -61,5 +61,23 @@ Created at : {created_at}
         else:
             await ctx.send(f"```ini\n[ {user.name}#{user.discriminator} ]\n\nUsername : {user.name}\nID : {user.id}\nCreated at : {created_at}```\n{user.avatar_url}", delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
+    @commands.command(name="serverinfo", description="Get information about the server.", aliases=["si"], usage="")
+    async def serverinfo(self, ctx):
+        cfg = config.Config()
+
+        embed = dembed.Embed(f"", description=f"""
+Server name : {ctx.guild.name}
+Server ID : {ctx.guild.id}
+Owner : {ctx.guild.owner}
+Members : {ctx.guild.member_count}
+""", colour=cfg.get('theme')['colour'])
+        embed.set_author(name=f"{ctx.guild.name}")
+        embed.set_image(url=ctx.guild.icon_url)
+
+        if cfg.get("message_settings")["embeds"]:
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+        else:
+            await ctx.send(f"```ini\n[ {ctx.guild.name} ]\n\nServer name : {ctx.guild.name}\nServer ID : {ctx.guild.id}\nOwner : {ctx.guild.owner}\nMembers : {ctx.guild.member_count}```\n{ctx.guild.icon_url}", delete_after=cfg.get("message_settings")["auto_delete_delay"])
+
 def setup(bot):
     bot.add_cog(Info(bot))
