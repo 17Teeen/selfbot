@@ -36,5 +36,30 @@ class Info(commands.Cog):
         else:
             await ctx.send(f"```ini\n[ info commands ({selected_page}/{len(pages)}) ]\n\n{pages[selected_page - 1]}```", delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
+    @commands.command(name="userinfo", description="Get information about a user.", aliases=["ui"], usage="<user>")
+    async def userinfo(self, ctx, user: discord.User = None):
+        cfg = config.Config()
+
+        if user is None:
+            user = ctx.author
+
+        created_at = user.created_at.strftime("%d %B, %Y")
+
+        if cfg.get("message_settings")["embeds"]:
+            embed = dembed.Embed(f"", description=f"""
+Username : {user.name}
+ID : {user.id}
+Created at : {created_at}
+""", colour=cfg.get('theme')['colour'])
+            embed.set_author(name=f"{user.name}#{user.discriminator}")
+            try:
+                embed.set_image(url=user.avatar_url)
+            except:
+                pass
+                
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+        else:
+            await ctx.send(f"```ini\n[ {user.name}#{user.discriminator} ]\n\nUsername : {user.name}\nID : {user.id}\nCreated at : {created_at}```\n{user.avatar_url}", delete_after=cfg.get("message_settings")["auto_delete_delay"])
+
 def setup(bot):
     bot.add_cog(Info(bot))
