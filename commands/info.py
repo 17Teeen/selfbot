@@ -1,3 +1,4 @@
+import discord
 import discord_self_embed as dembed
 
 from discord.ext import commands
