@@ -3,7 +3,7 @@ import os
 
 from . import console
 
-VERSION = "0.0.4-alpha"
+VERSION = "1.0.0"
 DEFAULT_CONFIG = {
     "token": "",
     "prefix": "",
