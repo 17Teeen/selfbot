@@ -43,7 +43,8 @@ async def on_command(ctx):
     except Exception as e:
         console.print_error(str(e))
 
-    console.print_cmd(ctx.command.name)
+    command = ctx.message.content[len(flight.command_prefix):]
+    console.print_cmd(command)
 
 @flight.event
 async def on_command_error(ctx, error):
