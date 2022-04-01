@@ -79,5 +79,20 @@ Members : {ctx.guild.member_count}
         else:
             await ctx.send(f"```ini\n[ {ctx.guild.name} ]\n\nServer name : {ctx.guild.name}\nServer ID : {ctx.guild.id}\nOwner : {ctx.guild.owner}\nMembers : {ctx.guild.member_count}```\n{ctx.guild.icon_url}", delete_after=cfg.get("message_settings")["auto_delete_delay"])
 
+    @commands.command(name="avatar", description="Get the avatar of a user.", aliases=["av"], usage="<user>")
+    async def avatar(self, ctx, user: discord.User = None):
+        cfg = config.Config()
+
+        if user is None:
+            user = ctx.author
+
+        if cfg.get("message_settings")["embeds"]:
+            embed = dembed.Embed(f"", colour=cfg.get('theme')['colour'])
+            embed.set_author(name=f"{user.name}'s avatar")
+            embed.set_image(url=user.avatar_url)
+            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
+        else:
+            await ctx.send(f"{user.avatar_url}", delete_after=cfg.get("message_settings")["auto_delete_delay"])
+
 def setup(bot):
     bot.add_cog(Info(bot))
