@@ -12,10 +12,12 @@ class General(commands.Cog):
         cfg = config.Config()
         embed = dembed.Embed("", description=f"""
 {self.bot.command_prefix}fun - Fun commands
+{self.bot.command_prefix}img - Image commands
 {self.bot.command_prefix}info - Information commands
 {self.bot.command_prefix}mod - Moderation commands
 {self.bot.command_prefix}util - Utility commands""", colour=cfg.get('theme')['colour'])
-        embed.set_author(name="command categories")
+        # embed.set_author(name="command categories")
+        # embed.set_image(url="https://tinyurl.com/bdcm34ts")
 
         if cfg.get("message_settings")["embeds"]:
             await ctx.send(

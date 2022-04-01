@@ -142,19 +142,6 @@ class Fun(commands.Cog):
         else:
             await ctx.send(f"""```ini\n[ block send ] Sent {message} to {user.name}#{user.discriminator} ({user.id}).\n```""", delete_after=self.cfg.get("message_settings")["auto_delete_delay"])
 
-    @commands.command(name="gato", description="Get a random cat picture.", usage="")
-    async def gato(self, ctx):
-        cfg = config.Config()
-        resp = requests.get("https://api.alexflipnote.dev/cats")
-        image = resp.json()["file"]
-
-        if cfg.get("message_settings")["embeds"]:
-            embed = dembed.Embed("gato", colour=cfg.get('theme')['colour'])
-            embed.set_image(url=image)
-            await ctx.send(f"{cfg.get('theme')['emoji']} `{cfg.get('theme')['title']}`" + embed.generate_url(hide_url=True, shorten_url=False), delete_after=cfg.get("message_settings")["auto_delete_delay"])
-        else:
-            await ctx.send(image, delete_after=cfg.get("message_settings")["auto_delete_delay"])
-
     @commands.command(name="cembed", description="Create a custom embed.", usage="")
     async def customembed(self, ctx, *, args):
         args = args.lower().split("\n")
